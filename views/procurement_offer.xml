@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+    
+        <record model="ir.ui.view" id="procurement_offer_form_view">
+            <field name="name">procurement.offer.form</field>
+            <field name="model">procurement.offer</field>
+            <field name="arch" type="xml">
+                <form string="Procurement Offer">
+                    <header>
+                        <button name="submit" type="object" class="btn-primary" string="Submit" states="new"/>
+                        <button name="approve" type="object" class="btn-primary" string="Approve" states="submit"/>
+                        <button name="decline" type="object" string="Decline" states="submit"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,submit,approve"/>                       
+                    </header>
+                    <sheet>
+                        <group name="general">
+                            <group>
+                                <field name="proc_plan_id"/>
+                                <field name="partner_id"/>
+                            </group>
+                            <group>
+                                <field name="submission_date"/>
+                            </group>
+                        </group>
+                        <separator string="Description"/>
+                        <field name="description" placeholder="Click to add description"/>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" help="Follow this document to automatically track the events associated to lines of this document." groups="base.group_user"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+    
+        <record model="ir.ui.view" id="procurement_offer_search_view">
+            <field name="name">procurement.offer.search</field>
+            <field name="model">procurement.offer</field>
+            <field name="arch" type="xml">
+                <search string="Search Procurement Offer">
+                    <field name="proc_plan_id"/>
+                    <field name="partner_id"/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_proc_plan" string="Procurement Plan" context="{'group_by': 'proc_plan_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+    
+        <record model="ir.ui.view" id="procurement_offer_tree_view">
+            <field name="name">procurement.offer.tree</field>
+            <field name="model">procurement.offer</field>
+            <field name="arch" type="xml">
+                <tree decoration-muted="state == 'decline'" string="Procurement Offers">
+                    <field name="state" invisible="1"/>
+                    <field name="proc_plan_id"/>
+                    <field name="partner_id"/>
+                    <field name="submission_date"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="procurement_plan_offers_act_window">
+            <field name="name">Offers</field>
+            <field name="res_model">procurement.offer</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="procurement_offer_search_view"/>
+            <field name="context">{'default_proc_plan_id': active_id}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Here, you can add new procurement offers
+                </p>
+                <p>
+                    You can now manage and organize your offers for the selected procurement plan.
+                </p>
+            </field>
+        </record>
+    
+    </data>
+</odoo>

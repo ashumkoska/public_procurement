@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+    
+        <record model="ir.actions.act_window" id="procurement_plan_act_window">
+            <field name="name">Procurement Plan</field>
+            <field name="res_model">procurement.plan</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Here, you can add new procurement plans
+                </p>
+                <p>
+                    You can now manage and organize your full procurement plan workflows.
+                </p>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="procurement_item_type_act_window">
+            <field name="name">Procurement Item Types</field>
+            <field name="res_model">procurement.plan.line.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="procurement_offer_act_window">
+            <field name="name">Procurement Offers</field>
+            <field name="res_model">procurement.offer</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="procurement_offer_search_view"/>
+            <field name="domain">[]</field>
+            <field name="context">{'search_default_group_proc_plan': 1}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Here, you can add new procurement offers
+                </p>
+                <p>
+                    You can now manage and organize your offers for the corresponding procurement plans.
+                </p>
+            </field>
+        </record>
+        
+        <record model="ir.ui.menu" id="public_procurement_main_menu">
+            <field name="name">Public Procurements</field>
+        </record>
+        
+        <record model="ir.ui.menu" id="public_procurement_menu">
+            <field name="name">Public Procurements</field>
+            <field name="parent_id" ref="public_procurement_main_menu"/>
+            <field name="sequence" eval="5"/>
+        </record>
+        
+        <record model="ir.ui.menu" id="procurement_plan_menu">
+            <field name="name">Procurement Plans</field>
+            <field name="parent_id" ref="public_procurement_menu"/>
+            <field name="action" ref="procurement_plan_act_window"/>
+            <field name="sequence" eval="5"/>
+        </record>
+        
+        <record model="ir.ui.menu" id="procurement_offer_menu">
+            <field name="name">Procurement Offers</field>
+            <field name="parent_id" ref="public_procurement_menu"/>
+            <field name="action" ref="procurement_offer_act_window"/>
+            <field name="sequence" eval="10"/>
+        </record>
+        
+        <record model="ir.ui.menu" id="public_procurement_config_menu">
+            <field name="name">Configuration</field>
+            <field name="parent_id" ref="public_procurement_main_menu"/>
+            <field name="sequence" eval="10"/>
+        </record>
+        
+        <record model="ir.ui.menu" id="procurement_item_type_menu">
+            <field name="name">Procurement Item Types</field>
+            <field name="parent_id" ref="public_procurement_config_menu"/>
+            <field name="action" ref="procurement_item_type_act_window"/>
+            <field name="sequence" eval="5"/>
+        </record>
+        
+    </data>
+</odoo>
